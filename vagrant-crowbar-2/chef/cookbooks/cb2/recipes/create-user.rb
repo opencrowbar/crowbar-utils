@@ -59,6 +59,16 @@ execute "add_key" do
 	not_if "grep \"#{node.props.user_sshpubkey}\" /home/#{node.props.guest_username}/.ssh/authorized_keys "
 end	
 
+# add some universal packages
+case node[:platform]
+when "centos"
+  package "screen"
+when "ubuntu"
+  package "byobu"
+end
+
+
+
 # setup timezone
 execute "timezone setup" do
   case node[:platform]
