@@ -38,7 +38,7 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "cb2::http-proxy-client"
       chef.add_recipe "cb2::package-repo"
       chef.add_recipe "cb2::ruby"
-      chef.add_recipe "cb2::json"
+      chef.add_recipe "cb2::gems"
       chef.add_recipe "cb2::chef-tools"
       chef.add_recipe "cb2::docker"
       chef.add_recipe "cb2::crowbar-1-source-and-build-prep"
