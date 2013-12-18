@@ -29,16 +29,16 @@ when "centos"
 end
 
 %w{ json builder bluecloth net-http-digest_auth kwalify bundler delayed_job delayed_job_active_record rake simplecov rspec }.each do | pkg |
-  unless node[:platform] == 'centos'
+#  unless node[:platform] == 'centos'
     gem_package  "#{pkg}" do
       gem_binary "#{gem_binary_path}"
       options(node.gem_options + " --no-ri --no-rdoc ")
     end
-  else
-    execute "centos hack to install gem #{pkg} with scl enable ruby193 - make this an lwrp" do
-      command "scl enable ruby193 \'gem install #{pkg}\'"
-      not_if "scl enable ruby193 \'gem list --local #{pkg} | grep #{pkg}\'"
-    end
+#  else
+#    execute "centos hack to install gem #{pkg} with scl enable ruby193 - make this an lwrp" do
+#      command "scl enable ruby193 \'gem install #{pkg}\'"
+#      not_if "scl enable ruby193 \'gem list --local #{pkg} | grep #{pkg}\'"
+#    end
   end
 end
 
