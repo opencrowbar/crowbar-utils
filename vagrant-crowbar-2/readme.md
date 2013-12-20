@@ -13,13 +13,15 @@ Requires
 Synopsis
 --------
 
-Crowbar 2 Development Environments Management - Including CentOS, Ubuntu and OpenSUSE
+Crowbar 2 Development Environments Management - Including Ubuntu, CentOS and OpenSUSE.  Ubuntu is most used and tested.
 
 Description
 -----------
 Vagrant makes it easy to create repeatable development environments by harnessing configuration management principles.
 
-With the addition of "personal.json" you can:
+Vagrantfiles are the heart of operations of a Vagrant setup - but becuase they are checked in, they can't hide secret information.  So I created "personal.json.example"
+
+With the addition of a "personal.json" you can:
 
 1. Store your secrets without worry of uploading to github by accident
 1. Launch many different Linux flavors - whichever suits your development style
@@ -35,6 +37,8 @@ Vagrant launches virtual machines by default within the 10.0.2.0/32 NATed networ
 Usually 10.0.2.15 and you can access your host box from it on 10.0.2.2  
 
 Connect as the "vagrant" user with simply `vagrant ssh`.
+
+When this setup is done, you can connect without a password `ssh -p 2222 <username>@127.0.0.1`
 
 Setup
 -----
@@ -63,7 +67,7 @@ Configuration
 ### `personal.json` Parameters
 
   * Box Basic Config
-    * "guest_hostname" is the hostname of the guest AND machine name that will appear in your hypervizor.
+    * "guest_hostname" is the hostname of the guest AND machine name that will appear in your hypervisor.
     * "box_name" and "box_url" are pairs: You'll see multiple of these, for reference.  Only one should be uncommented at a time, and they indicate which Linux variant you'll be developing on.  When you change this, change the guest_hostname above to something descriptive and unique to create a new box along side any others.
     * "guest_cpus": Minimum 3 recommended for building Crowbar
     * "guest_ram": Minimum 3 gigs recommended for building Crowbar
