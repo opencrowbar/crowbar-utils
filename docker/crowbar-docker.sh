@@ -35,6 +35,9 @@ done
 
 echo ${ADMIN} ${NETWORK} ${IMAGE}
 
+
+
+
 # is Docker running? get its bridge
 DOCKER_BRIDGE=''
 
@@ -53,6 +56,8 @@ then
   fi
 fi
 
+# find interface that can route to admin server
+
 # does a bridge have this network?
 
 BRIDGES=($(brctl show | sed -n '2,$ s/^\(\w\+\).*$/\1/p'))
@@ -67,13 +72,15 @@ for BR in ${BRIDGES[@]}; do
   fi
 done
 
+# find interface that can route to admin server
+
 # create bridge if necessary
 if [ -z "${GOOD_BRIDGE}" ]
 then
   MY_BRIDGE="br${RANDOM}"
   brctl addbr ${MY_BRIDGE}
-  ip address add ${NETWORK} dev ${MY_BRIDGE} || die "ip address add error"
-  ip link set dev ${MY_BRIDGE} up
+  #ip address add ${NETWORK} dev ${MY_BRIDGE} || die "ip address add error"
+  #ip link set dev ${MY_BRIDGE} up
   GOOD_BRIDGE=${MY_BRIDGE}
 fi
 
@@ -92,7 +99,6 @@ exit 1
 # are containers running?
 
 echo "You've gotta stop your containers to reconfigure Docker."
-exit 1
 
 
 # check network
