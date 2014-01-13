@@ -10,7 +10,7 @@ autocmd BufEnter * lcd /home/<%= @username %>/crowbar/barclamps/crowbar/crowbar_
 autocmd BufWritePost /home/<%= @username %>/crowbar/barclamps/crowbar/crowbar_framework/* !cp <afile>:p /mnt/admin/opt/dell/crowbar_framework/<afile>:.
 
 let NERDTreeShowBookmarks=1
-let NERDTreeWinSize=50
+let NERDTreeWinSize=20
 set softtabstop=2
 set shiftwidth=2
 set tabstop=2

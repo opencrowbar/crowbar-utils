@@ -10,7 +10,7 @@ when "ubuntu"
   package "cabextract"
   # testing packages
   package "erlang-base"
-  package "erlang-inet"
+  package "erlang-inets"
   package "ruby-dev" 
   package "ruby-bundler" 
   package "libsqlite3-dev" 
