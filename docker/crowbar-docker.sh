@@ -1,9 +1,12 @@
 #!/bin/bash
 
+# sets up the network and reconfigures docker, then launches a container.
+# creates/updates a bridge to contain the proper network
+# adds the NIC to it that will route to the admin server
+# reconfigures docker to use that bridge
+# runs container
+
 # argv:
-# admin server IP, 
-# a network/CIDR 
-# an IP address
 
 # 1) admin server IP
 # 2) network and netmask docker will run
@@ -33,7 +36,13 @@ while (($# > 0)); do
   shift
 done
 
-echo ${ADMIN} ${NETWORK} ${IMAGE}
+# Check for minimum docker version
+DOCKER_VERSION=$(docker version | grep "Server" | awk '{print $2}')
+[[ $DOCKER_VERSION =~ ^0+\. ]] && die "Need Docker version >0.7.0.  Please upgrade it."
+DOCKER_MINOR_VERSION=$(echo $DOCKER_VERSION | cut -d'.' -f2)
+[[ $DOCKER_MINOR_VERSION < 7 ]] && die "Need Docker version >0.7.0.  Please upgrade it."
+
+log "Admin: ${ADMIN} Network: ${NETWORK} Image: ${IMAGE}"
 
 # is Docker running? get its bridge
 DOCKER_BRIDGE=''
@@ -45,18 +54,20 @@ then
   if [[ "${DOCKER_COMMAND}" == *-b=* ]]
   then
     DOCKER_BRIDGE=$(expr "${DOCKER_COMMAND}" : '.*-b=\(.*\)\>.*')
-    echo ${DOCKER_BRIDGE}
+    log "Found bridge: ${DOCKER_BRIDGE}"
   else
   # otherwise set bridge to default
-    echo "use default bridge: docker0"
+    log "Docker is using bridge: docker0"
     DOCKER_BRIDGE='docker0'
   fi
 fi
 
-# find interface that can route to admin server
+# Find interface that can route to admin server
 # it will be our route to the admin network
-# Illegible shell commands, just the way I like it:
+# it'll need its address removed, then that address added to the bridge,
+# then have the interface added to the bridge
 
+# one liner (illegible, ignore):
 #ip -o -4 a | grep $(tracepath 192.168.124.10 | head -1 | awk '{ print $2 }' ) | awk '{print $2}'
 
 # or, more legibly:
@@ -64,12 +75,14 @@ fi
 INTERFACE=$(tracepath ${ADMIN} | head -1 | awk '{ print $2 }' )
 # get interface from above IP address
 GATEWAY_TO_ADMIN=$(ip -o -4 a | grep $INTERFACE | awk '{print $2}')
+log "Gateway to Admin: ${GATEWAY_TO_ADMIN}"
 
 # does a bridge have this network?
-
 BRIDGES=($(brctl show | sed -n '2,$ s/^\(\w\+\).*$/\1/p'))
 GOOD_BRIDGE=''
 for BR in ${BRIDGES[@]}; do
+  # TODO: this may be wrong.  It'll find the IP address, but  not the network
+  # might be better to search for the route
   if ip -o -4 a show dev ${BR} | grep -q "inet ${NETWORK}" 
   #if [ $(ip -o -4 a show dev ${BR} | grep -q "inet ${NETWORK}") ]
   then
@@ -88,12 +101,13 @@ then
   #ip link set dev ${MY_BRIDGE} up
   GOOD_BRIDGE=${MY_BRIDGE}
 fi
+log "Using bridge ${GOOD_BRIDGE}"
 
 # setup docker to use the good bridge
 if [[ ${DOCKER_BRIDGE} != ${GOOD_BRIDGE} ]]
 then
   stop docker
-  # change an existing config
+  # change an existing docker config
   grep '\-b=' /etc/default/docker && perl -pi -e "s/-b=\w+/-b=${GOOD_BRIDGE}/" /etc/default/docker
   # or add to a file without a config
   grep DOCKER_OPTS /etc/default/docker || echo "DOCKER_OPTS=\"-b=${GOOD_BRIDGE}\"" >> /etc/default/docker
@@ -104,12 +118,17 @@ fi
 
 echo "You've gotta stop your containers to reconfigure Docker."
 
-
 # check network
+## can I ping the admin server?  Does it matter?
+
+# remove IP address from the gateway NIC
+# add IP address to the bridge
+# add the NIC to the bridge
+
 
 # make a container and network out of it.
 
-# create Container with IP
+# run image to create Container 
 
 
 
