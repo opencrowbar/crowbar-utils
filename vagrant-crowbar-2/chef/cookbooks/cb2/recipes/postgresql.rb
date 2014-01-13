@@ -35,7 +35,8 @@ when "ubuntu"
     #sudo vi /etc/postgresql/9.3/main/pg_hba.conf
       # add 'local  all   all    trust'
     bash "Postgresql: add local listener" do
-      code "echo 'local	all	all	trust' >> /etc/postgresql/9.3/main/pg_hba.conf; echo 'colic' >> /tmp/test"
+      # add string to first line for local user access permission to DB
+      code "sed -i '1s/^/local	all	all	trust/' /etc/postgresql/9.3/main/pg_hba.conf; "
       not_if "grep '^local.*trust' /etc/postgresql/9.3/main/pg_hba.conf" 
     end
 
@@ -54,13 +55,15 @@ when "ubuntu"
     #sudo createuser -s -d -U postgres crowbar
     bash "Postgresql: add crowbar user to postgres" do
       code "su postgres -c 'createuser -s -d -U postgres crowbar'"
-      not_if 'grep "port = 5439" /etc/postgresql/9.3/main/postgresql.conf'
+      #code "su postgres -c 'PGCLUSTER=9.3/main; psql -c \"CREATE USER crowbar WITH PASSWORD 'crowbar' createuser -s -d -U postgres crowbar; GRANT ALL PRIVILEGES ON DATABASE 'test_database' to tester;\""
+      #not_if "su postgres -c 'PGCLUSTER=9.3/main; psql postgresql://crowbar@:5439/template1 -c 'select true;''"
+      not_if "PGCLUSTER=9.3/main; psql postgresql://crowbar@:5439/template1 -c 'select true;'"
     end
 
     # you can test the install by making sure the following call returns
     # you can test the install ONCE CROWBAR IS INSTALLED ON THIS BOX.
     #bash "Postgresql: test postgres install" do
-    #  code "su postgres -c PGCLUSTER=9.3/main; psql postgresql://crowbar@:5439/template1 -c 'select true;'"
-    #  returns 0
+      #code "su postgres -c PGCLUSTER=9.3/main; psql postgresql://crowbar@:5439/template1 -c 'select true;'"
+      #returns 0
     #end
 end

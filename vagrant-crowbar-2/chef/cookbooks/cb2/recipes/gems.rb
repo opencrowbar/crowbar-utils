@@ -39,7 +39,7 @@ end
 #      command "scl enable ruby193 \'gem install #{pkg}\'"
 #      not_if "scl enable ruby193 \'gem list --local #{pkg} | grep #{pkg}\'"
 #    end
-  end
+#  end
 end
 
 # note: gotta add PG
