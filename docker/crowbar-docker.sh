@@ -53,6 +53,18 @@ then
   fi
 fi
 
+# find interface that can route to admin server
+# it will be our route to the admin network
+# Illegible shell commands, just the way I like it:
+
+#ip -o -4 a | grep $(tracepath 192.168.124.10 | head -1 | awk '{ print $2 }' ) | awk '{print $2}'
+
+# or, more legibly:
+# get IP address of first hop to $ADMIN
+INTERFACE=$(tracepath ${ADMIN} | head -1 | awk '{ print $2 }' )
+# get interface from above IP address
+GATEWAY_TO_ADMIN=$(ip -o -4 a | grep $INTERFACE | awk '{print $2}')
+
 # does a bridge have this network?
 
 BRIDGES=($(brctl show | sed -n '2,$ s/^\(\w\+\).*$/\1/p'))
@@ -72,8 +84,8 @@ if [ -z "${GOOD_BRIDGE}" ]
 then
   MY_BRIDGE="br${RANDOM}"
   brctl addbr ${MY_BRIDGE}
-  ip address add ${NETWORK} dev ${MY_BRIDGE} || die "ip address add error"
-  ip link set dev ${MY_BRIDGE} up
+  #ip address add ${NETWORK} dev ${MY_BRIDGE} || die "ip address add error"
+  #ip link set dev ${MY_BRIDGE} up
   GOOD_BRIDGE=${MY_BRIDGE}
 fi
 
@@ -88,16 +100,18 @@ then
   start docker
 fi
 
-exit 1
 # are containers running?
 
 echo "You've gotta stop your containers to reconfigure Docker."
-exit 1
 
 
 # check network
 
+# make a container and network out of it.
+
 # create Container with IP
+
+
 
 get_ips_of_bridge() {
   local bridge
