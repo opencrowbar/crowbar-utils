@@ -1,7 +1,7 @@
 {
 "guest_hostname": "cb2dev1",
-"#box_name": "centos64-x86_64-20131030", 
-"#box_url": "https://github.com/2creatives/vagrant-centos/releases/download/v0.1.0/centos64-x86_64-20131030.box",
+"box_name": "centos-6.4_SCL", 
+"#box_url": "",
 "#box_name": "ubuntu-12.04.2-docker",
 "#box_url": "http://opencrowbar.org/ubuntu-12.04.2-docker.box",
 "#box_name": "opensuse-12.3-chef-docker",
@@ -18,7 +18,7 @@
 },
 "synced_dir_host": "/VMs/VMSharedDir/",
 "synced_dir_guest": "/mnt/VMSharedDir/",
-"crowbar_build_cache": "/opt/shared-cache/",
+"crowbar_build_cache": "/$HOME/.crowbar-build-cache/",
 "crowbar_iso_library": "/mnt/VMSharedDir/",
 "crowbar_iso_dest": "/mnt/VMSharedDir/ISOs",
 "crowbar_version": "2",
