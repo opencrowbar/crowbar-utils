@@ -16,13 +16,14 @@ then
 fi
 #${CONTAINER_NUMBER}=$(get the damn container unique string)
 
+sed -i "s/DESCRIPTION/$(date)/g"  /root/register-container.json 
 sed -i "s/HOSTNAME/${HOSTNAME}/g"  /root/register-container.json 
 sed -i "s/ALIAS/${ALIAS}/g"  /root/register-container.json 
 sed -i "s/IPADDRESS/${IP}/g"  /root/register-container.json 
 
 cat /root/register-container.json
 
-/usr/bin/curl --digest -u "${CROWBAR_INSTALL_KEY}"  --data @/root/register-container.json -H "Content-Type:application/json" --url http://${ADMIN_SERVER}/api/v2/nodes
-
-/usr/sbin/sshd
+CURL="/usr/bin/curl --digest -u ${CROWBAR_INSTALL_KEY} --data @/root/register-container.json -H Content-Type:application/json --url http://${ADMIN_SERVER}/api/v2/nodes"
+echo ${CURL}
+${CURL}
 

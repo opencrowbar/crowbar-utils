@@ -1,0 +1,9 @@
+{
+    "alive": true, 
+    "bootenv": "local", 
+    "description": "Docker Testing", 
+    "ip": "10.0.0.11", 
+    "name": "judd.test.com",
+    "alias": "judd",
+    "order": 100
+}

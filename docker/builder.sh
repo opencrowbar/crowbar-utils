@@ -1,4 +1,4 @@
 #!/bin/bash
-
-docker build -rm -t "newgoliath/crowbar-workload" .
+cp /root/.ssh/id_dsa.pub .
+docker build -t "newgoliath/crowbar-workload" .
 

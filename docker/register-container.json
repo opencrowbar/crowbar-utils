@@ -1,7 +1,7 @@
 {
     "alive": true, 
     "bootenv": "local", 
-    "description": "Docker Testing", 
+    "description": "DESCRIPTION", 
     "ip": "IPADDRESS", 
     "name": "HOSTNAME",
     "alias": "ALIAS",

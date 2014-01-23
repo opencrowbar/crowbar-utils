@@ -10,7 +10,7 @@
 # 1) admin server IP
 # 2) network and netmask docker will run
 # 3) image name to run
-#set -x
+set -x
 ADMIN="192.168.124.10"
 NETWORK="192.168.124.1/24"
 IMAGE="ubuntu-12.04"
@@ -77,6 +77,7 @@ GATEWAY_INTERFACE=$(ip -o -4 a | grep $GATEWAY_ADDRESS | awk '{print $2}')
 log "Gateway to Admin: ${GATEWAY_INTERFACE}"
 
 # does a bridge have this network?
+log "Does bridge have this network"
 BRIDGES=($(brctl show | sed -n '2,$ s/^\(\w\+\).*$/\1/p'))
 GOOD_BRIDGE=''
 for BR in ${BRIDGES[@]}; do
@@ -92,6 +93,7 @@ done
 
 # setup docker to run its bridge on the right network
 
+log "Compare Bridges"
 if [[ ${DOCKER_BRIDGE} == ${GOOD_BRIDGE} ]]
 then
   # all clear, all done
@@ -101,6 +103,7 @@ fi
 # should really clean up any bad bridges here
 
 # reconfigure docker
+log "Reconfigure Docker"
 stop docker 2>&1 > /dev/null
 
 # change an existing docker config
@@ -110,6 +113,7 @@ then
   perl -pi -e "s/-b=\w+//" /etc/default/docker
 fi
 
+log "reconfig docker opts"
 # does it have a DOCKER_OPTS?
 if ! grep -q "^[^#]DOCKER_OPTS.*" /etc/default/docker
 then
@@ -131,6 +135,7 @@ log "Starting reconfigured Docker."
 start docker
 sleep 5
 
+log "Changing Network configs."
 # Add NIC to Bridge
 # remove IP address from the gateway NIC
 #ip addr del ${ADMIN} dev ${GATEWAY_INTERFACE}
@@ -142,3 +147,4 @@ ip address add ${GATEWAY_ADDRESS} dev docker0 || die "ip address add error"
 ip link set ${GATEWAY_INTERFACE} master docker0
 #ip link set ${GOOD_BRIDGE} up # docker already flexible
 
+log "Done."
