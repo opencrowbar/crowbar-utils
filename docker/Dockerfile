@@ -2,25 +2,25 @@
 
 FROM ubuntu:12.04
 MAINTAINER Judd Maltin judd@newgoliath.com
+RUN apt-get update
+
+# install curl and prep scripts to check into Crowbar Admin Server
+ADD register-container.sh /root/register-container.sh
+ADD register-container.json /root/register-container.json
+RUN apt-get -y install curl vim-tiny
+RUN chmod 755 /root/register-container.sh
+
 
 # setup ssh keys for Mr. Root
 
-RUN mkdir /root/.ssh
-RUN chown root:root -R /root/.ssh
-ADD id_rsa.pub /root/.ssh/authorized_keys
+#RUN mkdir /root/.ssh
+#RUN chown root:root -R /root/.ssh
+#ADD id_rsa.pub /root/.ssh/authorized_keys
+RUN mkdir /var/run/sshd
+VOLUME /root/.ssh
+RUN apt-get install -y openssh-server
 
 # install and setup openssh-server
-RUN apt-get update
-RUN apt-get install openssh-server
-RUN mkdir /var/run/sshd
-RUN /usr/bin/sshd -D &
+#RUN /usr/bin/sshd -D &
 
-# check into Crowbar Admin Server
-RUN apt-get install curl
-#ADD crowbar-utils/docker/register_container.sh /root/register_container.sh
-#ADD crowbar-utils/docker/node_samples.json /root/node_samples.json
-RUN chmod 755 /root/register_container.sh
-CMD /root/register_container.sh
-
-
-
+CMD ["/root/register-container.sh"]

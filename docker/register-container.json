@@ -1,11 +1,9 @@
 {
-    "alias": "ALIAS", 
     "alive": true, 
     "bootenv": "local", 
     "description": "Docker Testing", 
-    "hint": "{ 
-	\"ip\"\: \"IPADDRESS\"
-    }", 
+    "ip": "IPADDRESS", 
     "name": "HOSTNAME",
+    "alias": "ALIAS",
     "order": 100
 }

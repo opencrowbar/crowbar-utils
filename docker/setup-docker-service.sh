@@ -133,7 +133,8 @@ sleep 5
 
 # Add NIC to Bridge
 # remove IP address from the gateway NIC
-ip addr del ${ADMIN} dev ${GATEWAY_INTERFACE}
+#ip addr del ${ADMIN} dev ${GATEWAY_INTERFACE}
+ip addr flush dev ${GATEWAY_INTERFACE}
 # add IP address to the bridge
 ip address add ${GATEWAY_ADDRESS} dev docker0 || die "ip address add error"
 # add the Gateway NIC to the bridge
