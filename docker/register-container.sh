@@ -23,7 +23,5 @@ sed -i "s/IPADDRESS/${IP}/g"  /root/register-container.json
 
 cat /root/register-container.json
 
-CURL="/usr/bin/curl --digest -u ${CROWBAR_INSTALL_KEY} --data @/root/register-container.json -H Content-Type:application/json --url http://${ADMIN_SERVER}/api/v2/nodes"
-echo ${CURL}
-${CURL}
+/usr/bin/curl -v --digest -u ${CROWBAR_INSTALL_KEY} --data @/root/register-container.json -H Content-Type:application/json --url http://${ADMIN_SERVER}/api/v2/nodes
 
