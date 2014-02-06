@@ -16,17 +16,9 @@ when "ubuntu"
     package "#{p}"
   end
 
-  gem_package "foodcritic" do
-    gem_binary "/usr/bin/gem1.9.1"
-    options(node.gem_options)
-    version ">1"
-  end
+  gem_package "foodcritic"
 
-  gem_package "berkshelf" do
-    gem_binary "/usr/bin/gem1.9.1"
-    options(node.gem_options)
-    version ">1"
-  end
+  gem_package "berkshelf" 
 
 when "centos"
   %w{libxml2-devel libxml2 libxslt-devel}.each do |p|

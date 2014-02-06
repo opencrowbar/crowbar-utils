@@ -1,7 +1,12 @@
 # add deb repo from docker upstream; grab key from keyserver
+
+execute "docker permissions" do
+  command "chmod 666 /var/run/docker.sock"
+end
+
 if node[:platform] == "ubuntu" 
 
-  include_recipe "apt::default"
+  #include_recipe "apt::default"
 
   #network reconfig for docker bridge
   admin_network = '192.168.124.10/24'
