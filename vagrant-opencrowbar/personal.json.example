@@ -1,13 +1,13 @@
 {
 "guest_hostname": "ocbdevubuntu2",
-"#box_url": "https://github.com/2creatives/vagrant-centos/releases/download/v0.1.0/centos64-x86_64-20131030.box",
+"box_url": "https://maltin.org/muuusic/opencrowbar-ubuntu.box",
 "box_name": "opencrowbar-ubuntu",
 "guest_username": "judd",
 "user_sshpubkey": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCr17d6WBQLPsQ3elG/owyS6iAXhZtWoMWOVvahdvMfBIY5GCO72s8sJUnPW9QamGx49vDdVNYQGngyGQMHSZXJFtwh6hRtmkNhieXtGTmsa/FONz5GYc8TPcW/L1bXDFg8AXt3y6bs5ms2iPQXWEPtPPZP1dHoChWf/DV7wBPjpYkNzq76/3Y7vvMf6URSSgB9HntU5K90payet6o8y4PBbh+egf0A2mKIUTMRKWc+VKfS+UIRzZhaOnnD8lAPe2BCXiragh3WQOlLRpHVLJbAQXw0i662AsRcflWzEhpfnJBvbeJWxrj5MEUs7+BmfPbM0DhuyR7kBUJKW5T9jlzR judd@judd-m6600",
 "git_user_name": "Judd Maltin",
 "git_user_email": "judd@newgoliath.com",
 "github_id": "newgoliath",
-"github_password": "yeah, right",
+"github_password": "yeahright",
 "github_repo": "https://github.com/newgoliath/core.git",
 "github_extra_remotes": {
 	"upstream": ["https://github.com/opencrowbar/core.git"],
