@@ -4,6 +4,14 @@ execute "docker permissions" do
   command "chmod 666 /var/run/docker.sock"
 end
 
+template "/etc/default/docker" do
+	source "docker.erb"
+	mode 0440	
+	owner "root"
+	group "root"
+	variables ({:proxy => node[:props][:http_proxy] })
+end
+
 if node[:platform] == "ubuntu" 
 
   #include_recipe "apt::default"
