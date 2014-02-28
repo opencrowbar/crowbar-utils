@@ -1,5 +1,7 @@
 # add deb repo from docker upstream; grab key from keyserver
 
+package "lxc-docker"
+
 execute "docker permissions" do
   command "chmod 666 /var/run/docker.sock"
 end
