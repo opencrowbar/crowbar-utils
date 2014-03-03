@@ -2,12 +2,12 @@ call pathogen#infect()
 syntax on
 filetype plugin indent on
 
-autocmd BufEnter * lcd /home/<%= @username %>/crowbar/barclamps/crowbar/crowbar_framework/
+"autocmd BufEnter * lcd /home/<%= @username %>/crowbar/barclamps/crowbar/crowbar_framework/
 
 "/home/judd/crowbar/*
 "autocmd BufWritePost /home/<%= @username %>/crowbar/* !cp <afile>:p /mnt/admin/opt/dell/crowbar_framework/<afile>:.
 "
-autocmd BufWritePost /home/<%= @username %>/crowbar/barclamps/crowbar/crowbar_framework/* !cp <afile>:p /mnt/admin/opt/dell/crowbar_framework/<afile>:.
+"autocmd BufWritePost /home/<%= @username %>/crowbar/barclamps/crowbar/crowbar_framework/* !cp <afile>:p /mnt/admin/opt/dell/crowbar_framework/<afile>:.
 
 let NERDTreeShowBookmarks=1
 let NERDTreeWinSize=20
