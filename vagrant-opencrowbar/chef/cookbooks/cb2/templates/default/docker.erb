@@ -1,9 +1,7 @@
-
-
-
+#
 # managed by chef, do not edit
 
-DOCKER_OPTS="-dns 8.8.8.8"
+DOCKER_OPTS="-dns 8.8.8.8 -s devicemapper'
 
 <%= "export http_proxy=" + @proxy if @proxy %> 
 <%= "export http_proxy=" + @proxy if @proxy %> 
