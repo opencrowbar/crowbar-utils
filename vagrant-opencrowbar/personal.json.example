@@ -14,7 +14,11 @@
 },
 "synced_dir_host": "/VMs/VMSharedDir/",
 "synced_dir_guest": "/mnt/VMSharedDir/",
-"crowbar_build_cache": "/home/judd/.crowbar-build-cache/",
+"cache_dir": "/home/judd/.cache/",
+"sledgehammer_pxe_dir": "",
+"chroot": "",
+"sledgehammer_live_cd_cache": "",
+"crowbar_build_cache": "",
 "crowbar_iso_library": "/mnt/VMSharedDir/",
 "crowbar_iso_dest": "/mnt/VMSharedDir/ISOs",
 "crowbar_version": "2",
@@ -26,3 +30,4 @@
 "guest_timezone": "America/New_York",
 "guest_extra_packages": ""
 }
+

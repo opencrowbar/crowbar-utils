@@ -67,8 +67,6 @@ when "ubuntu"
   package "byobu"
 end
 
-
-
 # setup timezone
 execute "timezone setup" do
   case node[:platform]

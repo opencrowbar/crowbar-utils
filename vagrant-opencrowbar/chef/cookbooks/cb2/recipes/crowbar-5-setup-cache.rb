@@ -6,7 +6,7 @@ directory "#{node.props.crowbar_build_cache}" do
   owner "#{node.props.guest_username}"
 end
 
-
+# sledgehammer bits
 bash "cp init.rd into .crowbar-build-cache" do
   command "cp #{node.props.crowbar_iso_library} #{node.props.crowbar_build_cache}/tftpboot/"
   not_if "file #{node.props.crowbar_build_cache}/tftpboot/initrd0.img"

@@ -2,9 +2,6 @@
 
 package "lxc-docker"
 
-execute "docker permissions" do
-  command "chmod 666 /var/run/docker.sock"
-end
 
 template "/etc/default/docker" do
 	source "docker.erb"
@@ -64,3 +61,23 @@ if node[:platform] == "centos"
   #sudo wget http://www.hop5.in/yum/el6/hop5.repo
 
 end
+
+service "docker" do
+  action :start
+end
+
+execute "docker permissions" do
+  command "chmod 666 /var/run/docker.sock"
+end
+
+group "docker" do
+  members node.props.guest_username
+  append true
+end
+
+execute "preload docker opencrowbar image" do
+	user "#{node[:props][:guest_username]}"
+	group "#{node[:props][:guest_username]}"
+  command "docker pull opencrowbar/centos:6.5-4"
+end
+
